@@ -112,7 +112,7 @@ mode = input(f"{Fore.LIGHTBLUE_EX}\n [{Fore.GREEN}>>>{Fore.LIGHTBLUE_EX}]{Fore.R
 
 if (mode == "3"):
     os.system("CLS")
-    printSlow(f"{Fore.GREEN}Thanks for using{Fore.BLUE} [krnlX]")
+    printSlow(f"{Fore.GREEN}Thanks for using{Fore.BLUE} [RevX]")
     time.sleep(3)
     exit()   
 
