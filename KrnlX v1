@@ -20,6 +20,7 @@ def printSlow(text):
 file = "codes.txt"
 num = random.randint(10, 1000)
 num2 = random.randint(100, 500)
+os.system("CLS")
 os.system(f"title Connected as [User{num}]")
 time.sleep(2)
 
