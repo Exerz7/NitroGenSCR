@@ -10,11 +10,6 @@ import os
 import itertools
 import subprocess
 
-
-num = random.randint(10, 1000)
-num2 = random.randint(100, 500)
-
-
 def printSlow(text):
     for char in text:
         print(char, end="")
@@ -29,59 +24,6 @@ time.sleep(1)
 os.system("CLS")
 os.system(f"title Connected as [User{num}]")
 os.system("CLS")
-
-animation_finished = False
-animation_finished2 = False
-animation_finished3 = False
-
-
-def animation():
- for x in itertools.cycle(['|', '/', '-', '\\']):
-    if animation_finished:
-            break
-    sys.stdout.write(f'\r{Fore.BLUE}[RevX] {Fore.GREEN}Checking RevX For Updates {Fore.RESET}' + x)
-    sys.stdout.flush()
-    time.sleep(0.1)
-
-def animation2():
- for x in itertools.cycle(['|', '/', '-', '\\']):
-    if animation_finished2:
-            break
-    sys.stdout.write(f'\r{Fore.BLUE}[RevX] {Fore.GREEN}Connecting to Discord Socket {Fore.RESET}' + x)
-    sys.stdout.flush()
-    time.sleep(0.1)
-
-def animation3():
- for x in itertools.cycle(['|', '/', '-', '\\']):
-    if animation_finished3:
-            break
-    sys.stdout.write(f'\r{Fore.BLUE}[RevX] {Fore.GREEN}Scraping currently {num2} Proxies {Fore.RESET}' + x)
-    sys.stdout.flush()
-    time.sleep(0.1)
-
-t = threading.Thread(target=animation)
-t.start()
-time.sleep(5)
-animation_finished = True
-
-t = threading.Thread(target=animation2)
-t.start()
-time.sleep(5)
-animation_finished2 = True
-
-t = threading.Thread(target=animation3)
-t.start()
-time.sleep(5)
-os.system("CLS")
-print(f"{Fore.GREEN}[Connected!]")
-animation_finished3 = True
-time.sleep(2)
-
-os.system("CLS")
-def credits():
- os.system(f"title Connected as [User{num}]")
-os.system("CLS")
-time.sleep(2)
 
 print(f"""{Fore.WHITE}
 
