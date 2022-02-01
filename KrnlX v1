@@ -12,6 +12,12 @@ import os
 import colorama
 from colorama import Fore, Style, init,Back
 
+def printSlow(text):
+    for char in text:
+        print(char, end="")
+        sys.stdout.flush()
+        time.sleep(.01)
+
 os.system("CLS")
 time.sleep(2)    
 
