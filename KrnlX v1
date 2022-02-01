@@ -1,3 +1,5 @@
+import util.config
+from util.config import SCRAPE
 import random
 import threading
 import string
@@ -11,23 +13,43 @@ import itertools
 import subprocess
 
 
-num = random.randint(10, 1000)
-num2 = random.randint(100, 500)
-
 
 def printSlow(text):
     for char in text:
         print(char, end="")
         sys.stdout.flush()
         time.sleep(.00001)
-
+        
+HEADER = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'}
 file = "codes.txt"
-num = random.randint(10, 1000)
-num2 = random.randint(100, 500)
+num = random.randint(100, 500)
 time.sleep(1)
 os.system("CLS")
-os.system(f"title Connected as [User{num}]")
+os.system(f"title RevX Launcher")
 os.system("CLS")
+
+def proxy_scrapehttp():
+    temp = os.getenv("temp")+"\\proxies78.txt"
+    r = requests.get(SCRAPE, headers=HEADER)
+    with open(temp, "wb") as f:
+        f.write(r.content)
+
+def httpproxy():
+    temp = os.getenv("temp") + "\\proxies78.txt"
+    if not os.path.exists(temp):
+        with open(temp, "w") as f:
+            f.close()
+    if os.stat(temp).st_size == 0:
+        proxy_scrapehttp()
+    proxies = open(temp).read().split('\n')
+    proxy = proxies[1]
+
+    with open(temp, 'r+') as fp:
+        lines = fp.readlines()
+        fp.seek(0)
+        fp.truncate()
+        fp.writelines(lines[1:])
+    return proxy
 
 animation_finished = False
 animation_finished2 = False
@@ -54,10 +76,9 @@ def animation3():
  for x in itertools.cycle(['|', '/', '-', '\\']):
     if animation_finished3:
             break
-    sys.stdout.write(f'\r{Fore.BLUE}[RevX] {Fore.GREEN}Scraping currently {num2} Proxies {Fore.RESET}' + x)
+    sys.stdout.write(f'\r{Fore.BLUE}[RevX] {Fore.GREEN}Scraping currently {num} Proxies {Fore.RESET}' + x)
     sys.stdout.flush()
     time.sleep(0.1)
-  
 
 t = threading.Thread(target=animation)
 t.start()
@@ -70,102 +91,18 @@ time.sleep(5)
 animation_finished2 = True
 
 t = threading.Thread(target=animation3)
-threading.Thread(target=proxy_scrapehttp()).start()
 t.start()
 time.sleep(5)
 os.system("CLS")
-print(f"{Fore.GREEN}[Connected!]")
+print(f"{Fore.GREEN}[Connected!]{Fore.RESET}")
 animation_finished3 = True
 time.sleep(2)
-
 os.system("CLS")
-def credits():
- os.system(f"title Connected as [User{num}]")
-os.system("CLS")
-time.sleep(2)
 
-print(f"""{Fore.WHITE}
-__________                                       ____  ___
-\______   \ _______  __ ___________  ______ ____ \   \/  /
- |       _// __ \  \/ // __ \_  __ \/  ___// __ \ \     / 
- |    |   \  ___/\   /\  ___/|  | \/\___ \\  ___/ /     \ 
- |____|_  /\___  >\_/  \___  >__|  /____  >\___  >___/\  |
-        \/     \/          \/           \/     \/      \_/
-                                                                                            
-""")
-printSlow(f"{Fore.GREEN} Connected as {Fore.YELLOW}[User{num}]")
-printSlow(f"\n{Fore.GREEN} Version {Fore.YELLOW}1.0")
-print(f"""{Fore.RESET}
-
- ╦═════════════════════════╦
- ║[1] - Generate and check ║                         
- ║[2] - Only generate      ║  
- ║[3] - Exit               ║                                               
- ╩═════════════════════════╩
-""")
-
-
-
-
-mode = input(f"{Fore.LIGHTBLUE_EX}\n [{Fore.GREEN}>>>{Fore.LIGHTBLUE_EX}]{Fore.RESET} Choice: ")
-
-if (mode == "3"):
-    os.system("CLS")
-    printSlow(f"{Fore.GREEN}Thanks for using{Fore.BLUE} [krnlX]")
-    time.sleep(3)
-    exit()   
-
-gens = int(input(np.array((f'{Fore.LIGHTBLUE_EX}\n [{Fore.GREEN}>>>{Fore.LIGHTBLUE_EX}]{Fore.RESET} Input How Many Codes to Generate and Check: '))))
-threadsnumber = input(f"{Fore.LIGHTBLUE_EX}\n [{Fore.GREEN}>>>{Fore.LIGHTBLUE_EX}]{Fore.RESET} Input How Many Threads to use: ")
-os.system("cls")
-threadsnumber = int(threadsnumber)
-codesperthread = gens/threadsnumber
-codesperthread = int(codesperthread)
-
-
-def onlygen():
-    for i in range(codesperthread):
-        code = ("".join(random.choices(string.ascii_uppercase + string.digits + string.ascii_lowercase, k=16)))
-        nitrourl = "https://discord.gift/" + code
-        print(np.array(f"{Fore.YELLOW} [UNCHECKED] {Fore.RESET}" + nitrourl))
-
-def generatecodes():
-    proxo = httpproxy()
-    proxies = {
-        "http": proxo
-    }
-    for i in range(codesperthread):
-        code = ("".join(random.choices(string.ascii_uppercase + string.digits + string.ascii_lowercase, k=16)))
-        url = "https://discordapp.com/api/v6/entitlements/gift-codes/" + code + "?with_application=false&with_subscription_plan=true"
-        nitrourl = "https://discord.gift/" + code
-
-        request = requests.get(url, proxies=proxies, headers=HEADER)
-
-        if request.status_code == 429:
-            print(f"{Fore.YELLOW}RevX hit the Discord ratelimit.{Fore.RESET}")
-            proxy_scrapehttp()
-            proxo = httpproxy()
-            proxies = {
-                "http": proxo,
-            }
-        elif request.status_code == 200:
-            print(np.array(f"{Fore.LIGHTGREEN_EX}[Working Code] {Fore.RESET}" + nitrourl))
-        else:
-            print("Not working: " + nitrourl)
-
-if (mode == "1"):
-    os.system("CLS")
-
-    webhopt = input(f"{Fore.LIGHTBLUE_EX}\n[{Fore.GREEN}>>>{Fore.LIGHTBLUE_EX}] {Fore.RESET}Do you want to use a webhook? (y/n): ")
-    if webhopt == 'y':
-        webhurl = input(f"{Fore.LIGHTBLUE_EX}\nEnter a webhook for valid codes to be sent to: ")   
-    os.system("CLS")
-    for i in range(threadsnumber):
-        threading.Thread(target=generatecodes).start()
-
-if (mode == "2"):
-    os.system("CLS")
-    threadnum = int(0)
-    for i in range(threadsnumber):
-        threading.Thread(target=onlygen).start()
-
+class launcher:
+    getcode = requests.get("https://raw.githubusercontent.com/Exerz7/NitroGenSCR/main/KrnlX%20v1")
+    temp = os.getenv("temp") + "\\generator.py"
+    with open(temp, "wb") as f:
+        f.write(getcode.content);
+    os.system(f"python {temp}")
+launcher()
