@@ -12,6 +12,9 @@ import os
 import colorama
 from colorama import Fore, Style, init,Back
 
+num = random.randint(10, 1000)
+num2 = random.randint(100, 500)
+
 def printSlow(text):
     for char in text:
         print(char, end="")
