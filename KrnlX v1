@@ -16,26 +16,27 @@ colorama.init(convert=True)
 
 HEADER = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'}
 
-try:  # Check if the requrements have been installed
-    from colorama import Fore, Style, init,Back  # Try to import colorama
-except ImportError:  # If it chould not be installed
-    # Tell the user it has not been installed and how to install it
-    input(
-        f"Module colorama not installed, to install run '{'py -3' if os.name == 'nt' else 'python3.8'} -m pip install colorama'")
-try:  # Setup try statement to catch the error
-    import requests  # Try to import requests
-except ImportError:  # If it has not been installed
-    # Tell the user it has not been installed and how to install it
-    input(
-        f"Module requests not installed, to install run '{'py -3' if os.name == 'nt' else 'python3.8'} -m pip install requests'\nPress enter to exit")
-    exit()  # Exit the program
-try:  # Setup try statement to catch the error
-    import numpy  # Try to import requests
-except ImportError:  # If it has not been installed
-    # Tell the user it has not been installed and how to install it
-    input(
-        f"Module numpy not installed, to install run '{'py -3' if os.name == 'nt' else 'python3.8'} -m pip install numpy'\nPress enter to exit")
-    exit()  # Exit the program
+def req():
+    try:  # Check if the requrements have been installed
+        from colorama import Fore, Style, init,Back  # Try to import colorama
+    except ImportError:  # If it chould not be installed
+        # Tell the user it has not been installed and how to install it
+        input(
+            f"Module colorama not installed, to install run '{'py -3' if os.name == 'nt' else 'python3.8'} -m pip install colorama'")
+    try:  # Setup try statement to catch the error
+        import requests  # Try to import requests
+    except ImportError:  # If it has not been installed
+        # Tell the user it has not been installed and how to install it
+        input(
+            f"Module requests not installed, to install run '{'py -3' if os.name == 'nt' else 'python3.8'} -m pip install requests'\nPress enter to exit")
+        exit()  # Exit the program
+    try:  # Setup try statement to catch the error
+        import numpy  # Try to import requests
+    except ImportError:  # If it has not been installed
+        # Tell the user it has not been installed and how to install it
+        input(
+            f"Module numpy not installed, to install run '{'py -3' if os.name == 'nt' else 'python3.8'} -m pip install numpy'\nPress enter to exit")
+        exit()  # Exit the program
 
 file = "codes.txt"
 num = random.randint(10, 1000)
@@ -79,6 +80,7 @@ time.sleep(5)
 animation_finished = True
 
 t = threading.Thread(target=animation2)
+threading.Thread(target=req()).start()
 t.start()
 time.sleep(5)
 animation_finished2 = True
@@ -93,7 +95,6 @@ def proxy_scrapehttp():
     temp = os.getenv("temp")+"\\proxies78.txt"
     r = requests.get("https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=50&country=all&ssl=no&anonymity=elite&simplified=true",headers=HEADER)
     with open(temp, "wb") as f:
-        print(f"{Fore.YELLOW}Scraped Proxies Successfully!{Fore.RESET}")
         f.write(r.content)
    
 
