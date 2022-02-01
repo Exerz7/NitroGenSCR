@@ -10,7 +10,7 @@ import os
 import itertools
 import subprocess
 
-HEADER = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'}
+
 num = random.randint(10, 1000)
 num2 = random.randint(100, 500)
 
@@ -20,29 +20,6 @@ def printSlow(text):
         print(char, end="")
         sys.stdout.flush()
         time.sleep(.00001)
-
-def proxy_scrapehttp():
-    temp = os.getenv("temp")+"\\proxies78.txt"
-    r = requests.get("https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=50&country=all&ssl=no&anonymity=elite&simplified=true",headers=HEADER)
-    with open(temp, "wb") as f:
-        f.write(r.content)
-
-def httpproxy():
-    temp = os.getenv("temp") + "\\proxies78.txt"
-    if not os.path.exists(temp):
-        with open(temp, "w") as f:
-            f.close()
-    if os.stat(temp).st_size == 0:
-        proxy_scrapehttp()
-    proxies = open(temp).read().split('\n')
-    proxy = proxies[1]
-
-    with open(temp, 'r+') as fp:
-        lines = fp.readlines()
-        fp.seek(0)
-        fp.truncate()
-        fp.writelines(lines[1:])
-    return proxy
 
 file = "codes.txt"
 num = random.randint(10, 1000)
