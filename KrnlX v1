@@ -12,6 +12,10 @@ import os
 import colorama
 from colorama import Fore, Style, init,Back
 
+colorama.init(convert=True)
+
+HEADER = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'}
+
 def proxy_scrapehttp():
     temp = os.getenv("temp")+"\\proxies78.txt"
     r = requests.get("https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=50&country=all&ssl=no&anonymity=elite&simplified=true",headers=HEADER)
